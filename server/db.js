@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-const db = new Sequelize('postgres://localhost/acme_product_managers_db', {
+const db = new Sequelize(process.env.DATABASE_URL, {
   logging: false,
 });
 
@@ -37,4 +37,4 @@ const syncAndSeed = () => {
     .catch(err => console.error(err));
 };
 
-syncAndSeed();
+module.exports = { User, Product, syncAndSeed };

@@ -4,7 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "webpack",
+    "start": "node server",
+    "webpack": "webpack",
+    "webpack:dev": "npm run webpack -- --mode=development --watch",
+    "start:dev": "npm run webpack:dev & DATABASE_URL=postgres://localhost/acme_product_managers_db nodemon server --ignore src/ --ignore dist/"
   },
   "keywords": [],
   "author": "",
