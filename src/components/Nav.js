@@ -7,7 +7,7 @@ const Nav = ({ location, managers }) => {
   const navPills = [
     { name: 'Home', path: '/' },
     { name: 'Products', path: '/products' },
-    { name: 'Managers', path: '/managers', numManagers: 1 },
+    { name: 'Managers', path: '/managers', numManagers: managers.length },
   ];
 
   return (
@@ -28,6 +28,10 @@ const Nav = ({ location, managers }) => {
   );
 };
 
+const mapStateToProps = state => {
+  return {
+    managers: findManagers(state)
+  }
+}
 
-
-export default Nav;
+export default connect(mapStateToProps)(Nav);

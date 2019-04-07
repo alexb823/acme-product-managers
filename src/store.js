@@ -26,18 +26,6 @@ const gotUsers = users => {
   };
 };
 
-export const findManagers = ({ products, users }) => {
-  let managers = [];
-  if (products.length && users.length) {
-    const managerIds = products.reduce((acc, product) => {
-      if (product.managerId) acc.push(product.managerId);
-      return acc;
-    }, []);
-    managers = users.filter(user => managerIds.includes(user.id));
-  }
-  return managers;
-};
-
 //thunks
 export const fetchProducts = () => {
   return dispatch => {
@@ -69,6 +57,19 @@ const reducer = (state = initialState, action) => {
     default:
       return state;
   }
+};
+
+//helper function to filter users that are product managers
+export const findManagers = ({ products, users }) => {
+  let managers = [];
+  if (products.length && users.length) {
+    const managerIds = products.reduce((acc, product) => {
+      if (product.managerId) acc.push(product.managerId);
+      return acc;
+    }, []);
+    managers = users.filter(user => managerIds.includes(user.id));
+  }
+  return managers;
 };
 
 const store = createStore(reducer, applyMiddleware(ThunkMiddleware));

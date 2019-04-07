@@ -5,6 +5,7 @@ import { fetchProducts, fetchUsers } from '../store';
 import Nav from './Nav';
 import Home from './Home';
 import Products from './Products';
+import Managers from './Managers';
 
 class App extends Component {
   componentDidMount() {
@@ -24,6 +25,7 @@ class App extends Component {
           <Route component={Nav} />
           <Route exact path="/" component={Home} />
           <Route path="/products" component={Products} />
+          <Route path="/managers" component={Managers} />
         </Router>
       </div>
     );

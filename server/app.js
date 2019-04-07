@@ -18,7 +18,7 @@ app.get('/api/users', (req, res, next) => {
 });
 
 app.get('/api/products', (req, res, next) => {
-  Product.findAll()
+  Product.findAll({ order: [['name', 'ASC']] })
     .then(products => res.send(products))
     .catch(next);
 });
