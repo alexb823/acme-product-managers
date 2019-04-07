@@ -1,16 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import {connect} from 'react-redux';
+import {findManagers} from '../store';
 
-const Nav = ({ location }) => {
-  console.log(location);
+const Nav = ({ location, managers }) => {
   const navPills = [
     { name: 'Home', path: '/' },
     { name: 'Products', path: '/products' },
-    { name: 'Managers', path: '/managers' },
+    { name: 'Managers', path: '/managers', numManagers: 1 },
   ];
 
   return (
-    <ul className="nav nav-pills">
+    <ul className="nav nav-pills mb-4">
       {navPills.map(navPill => (
         <li className="nav-item" key={navPill.name}>
           <Link
@@ -19,12 +20,14 @@ const Nav = ({ location }) => {
             }`}
             to={navPill.path}
           >
-            {navPill.name}
+            {navPill.name} {navPill.numManagers && `(${navPill.numManagers})`}
           </Link>
         </li>
       ))}
     </ul>
   );
 };
+
+
 
 export default Nav;
