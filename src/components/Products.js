@@ -1,11 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import Product from './Product';
 
 const Products = ({ products }) => {
   return (
-    <ul>
+    <ul className="list-group">
       {products.map(product => (
-        <li key={product.id}>{product.name}</li>
+        <li className="list-group-item" key={product.id}>
+          <Product product={product} />
+        </li>
       ))}
     </ul>
   );

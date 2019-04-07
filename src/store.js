@@ -72,6 +72,7 @@ export const findManagers = ({ products, users }) => {
   return managers;
 };
 
+
 const store = createStore(reducer, applyMiddleware(ThunkMiddleware));
 
 export default store;

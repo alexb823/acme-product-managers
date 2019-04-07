@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 const Home = ({ haveOpenings }) => {
   return (
-    <h5>We {!haveOpenings && "DON'T"} HAVE openings for Product Managers!</h5>
+    <h5>We{!haveOpenings && "DON'T"} HAVE openings for Product Managers!</h5>
   );
 };
 const mapStateToProps = state => {
@@ -12,3 +12,4 @@ const mapStateToProps = state => {
   };
 };
 export default connect(mapStateToProps)(Home);
+
