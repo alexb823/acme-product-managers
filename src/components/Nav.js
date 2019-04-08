@@ -7,7 +7,7 @@ const Nav = ({ location, managers }) => {
   const navPills = [
     { name: 'Home', path: '/' },
     { name: 'Products', path: '/products' },
-    { name: 'Managers', path: '/managers', numManagers: managers.length },
+    { name: 'Managers', path: '/managers', numManagers: `${managers.length}` },
   ];
 
   return (

@@ -50,17 +50,18 @@ class Product extends Component {
     if (manager) product.managerId = manager.id;
     else product.managerId = null;
     updateProduct(product)
-    .catch(ex => this.setState({ error: ex.response.data }))
-    .then(() => console.log(this.state.error))
+      .catch(ex => this.setState({ error: ex.response.data }))
+      .then(() => console.log(this.state.error));
   };
 
   render() {
-    const { product, currentManagerName, managerName } = this.state;
+    const { product, currentManagerName, managerName, error } = this.state;
     const { users } = this.props;
     const { handleOnChange, handleOnSubmit } = this;
 
     return (
       <div>
+        {error && <div className="alert alert-danger">error</div>}
         <h5>{product.name}</h5>
         <form onSubmit={handleOnSubmit}>
           <div className="form-group">
