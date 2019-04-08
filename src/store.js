@@ -47,6 +47,14 @@ export const fetchUsers = () => {
   };
 };
 
+export const updateProduct = product => {
+  return dispatch => {
+    return axios
+      .put(`/api/products/${product.id}`, product)
+      .then(() => dispatch(fetchProducts()));
+  };
+};
+
 //reducer
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -71,7 +79,6 @@ export const findManagers = ({ products, users }) => {
   }
   return managers;
 };
-
 
 const store = createStore(reducer, applyMiddleware(ThunkMiddleware));
 

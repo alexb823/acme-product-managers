@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { updateProduct } from '../store';
 
 class Product extends Component {
   constructor(props) {
@@ -14,17 +15,13 @@ class Product extends Component {
         name: product.name || '',
         managerId: product.managerId || '',
       },
-      manager: this.findManager(product, users) || {},
-      managerName: this.findManagerName(product, users),
+      currentManagerName: this.setManagerName(product, users),
+      managerName: this.setManagerName(product, users),
       error: '',
     };
   };
 
-  findManager = (product, users) => {
-    return users.find(user => user.id === product.managerId);
-  };
-
-  findManagerName = (product, users) => {
+  setManagerName = (product, users) => {
     let name = '--none--';
     if (product.managerId && users.length) {
       name = users.find(user => user.id === product.managerId).name;
@@ -33,9 +30,10 @@ class Product extends Component {
   };
 
   componentDidUpdate = prevProps => {
-    // console.log(this.props)
-    // console.log(prevProps)
-    if (this.props.users.length && !prevProps.users.length) {
+    if (
+      (this.props.users.length && !prevProps.users.length) ||
+      this.props.product.managerId !== prevProps.product.managerId
+    ) {
       this.setState(this.setInitialState(this.props));
     }
   };
@@ -44,16 +42,27 @@ class Product extends Component {
     this.setState({ managerName: target.value });
   };
 
+  handleOnSubmit = event => {
+    event.preventDefault();
+    const { users, updateProduct } = this.props;
+    const { product } = this.state;
+    const manager = users.find(user => user.name === this.state.managerName);
+    if (manager) product.managerId = manager.id;
+    else product.managerId = null;
+    updateProduct(product)
+    .catch(ex => this.setState({ error: ex.response.data }))
+    .then(() => console.log(this.state.error))
+  };
+
   render() {
-    const { product, manager, managerName } = this.state;
+    const { product, currentManagerName, managerName } = this.state;
     const { users } = this.props;
-    const { handleOnChange } = this;
-    const currentManagerName = manager.name || '--none--';
+    const { handleOnChange, handleOnSubmit } = this;
 
     return (
       <div>
         <h5>{product.name}</h5>
-        <form>
+        <form onSubmit={handleOnSubmit}>
           <div className="form-group">
             <label>Product Manager</label>
             <select
@@ -86,4 +95,13 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Product);
+const mapDispatchToProps = dispatch => {
+  return {
+    updateProduct: product => dispatch(updateProduct(product)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Product);

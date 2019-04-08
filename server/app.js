@@ -12,7 +12,7 @@ app.get('/', (req, res, next) => {
 });
 
 app.get('/api/users', (req, res, next) => {
-  User.findAll({order: [['name', 'ASC']]})
+  User.findAll({ order: [['name', 'ASC']] })
     .then(users => res.send(users))
     .catch(next);
 });
@@ -26,7 +26,7 @@ app.get('/api/products', (req, res, next) => {
 app.put('/api/products/:id', (req, res, next) => {
   Product.findByPk(req.params.id)
     .then(product => product.update(req.body))
-    .then(product => res.send(product))
+    .then(() => res.sendStatus(201))
     .catch(next);
 });
 

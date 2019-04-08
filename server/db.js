@@ -38,3 +38,4 @@ const syncAndSeed = () => {
 };
 
 module.exports = { User, Product, syncAndSeed };
+
